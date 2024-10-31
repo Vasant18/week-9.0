@@ -1,3 +1,37 @@
+# name: Deploy
+
+# on:
+#   push:
+#     branches:
+#       - master 
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v2
+
+#     - name: Set up SSH key
+#       env:
+#         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#       run: |
+#         echo "$SSH_PRIVATE_KEY" > keyfile
+#         chmod 600 keyfile
+
+#     - name: Add EC2 Host to known_hosts
+#       run: |
+#         mkdir -p ~/.ssh
+#         ssh-keyscan ec2-16-171-13-91.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+
+#     - name: Deploy to EC2
+#       run: |
+#         ssh -t -i keyfile ubuntu@ec2-16-171-13-91.eu-north-1.compute.amazonaws.com "bash ~/deploy.sh"
+
+
+
+
 name: Deploy
 
 on:
@@ -13,18 +47,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up SSH key
+    - name: SSH and deploy
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
         echo "$SSH_PRIVATE_KEY" > keyfile
         chmod 600 keyfile
-
-    - name: Add EC2 Host to known_hosts
-      run: |
         mkdir -p ~/.ssh
-        ssh-keyscan ec2-16-171-13-91.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
-
-    - name: Deploy to EC2
-      run: |
+        cp known_hosts ~/.ssh/known_hosts
         ssh -t -i keyfile ubuntu@ec2-16-171-13-91.eu-north-1.compute.amazonaws.com "bash ~/deploy.sh"
+
