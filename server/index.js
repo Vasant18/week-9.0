@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const adminRouter = require("./routes/admin");
 const userRouter = require("./routes/user");
-
+const PORT = 3000;
 const app = express();
 
 app.use(cors());
@@ -17,4 +17,6 @@ app.use("/user", userRouter)
 // DONT MISUSE THIS THANKYOU!!
 mongoose.connect('mongodb://localhost:27017/courses', { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+  });
