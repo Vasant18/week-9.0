@@ -55,7 +55,11 @@ jobs:
         chmod 600 keyfile
         mkdir -p ~/.ssh
         cp known_hosts ~/.ssh/known_hosts
+<<<<<<< HEAD
         ssh -t -i keyfile ubuntu@ec2-54-146-244-40.compute-1.amazonaws.com "sudo bash ~/deploy.sh"
+=======
+        ssh -t -i keyfile ubuntu@ec2-16-171-13-91.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
+>>>>>>> 91ade105b8c85151ed11eacae165921fa361aa65
 
 # name: Deploy
 
@@ -79,8 +83,16 @@ jobs:
 
 #     - name: Add EC2 Host to known_hosts
 #       run: |
+<<<<<<< HEAD
 #         ssh-keyscan -H ec2-54-146-244-40.compute-1.amazonaws.com >> ~/.ssh/known_hosts
 
 #     - name: Deploy to EC2
 #       run: |
 #         ssh ubuntu@ec2-54-146-244-40.compute-1.amazonaws.com "bash ~/deploy.sh"
+=======
+#         ssh-keyscan -H ec2-16-171-13-91.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+
+#     - name: Deploy to EC2
+#       run: |
+#         ssh ubuntu@ec2-16-171-13-91.eu-north-1.compute.amazonaws.com "bash ~/deploy.sh"
+>>>>>>> 91ade105b8c85151ed11eacae165921fa361aa65
