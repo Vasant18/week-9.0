@@ -44,19 +44,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the Repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Step 2: Set Up SSH Key
       - name: Set Up SSH Key
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > keyfile
-          chmod 600 keyfile
           mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_deploy_key
+          chmod 600 ~/.ssh/github_deploy_key
           ssh-keyscan -H ec2-54-146-244-40.compute-1.amazonaws.com >> ~/.ssh/known_hosts
 
+      # Step 3: Run Deployment Script on EC2
       - name: Run Deployment Script
         run: |
-          ssh -t -i keyfile ubuntu@ec2-54-146-244-40.compute-1.amazonaws.com "sudo bash ~/deploy.sh"
+          ssh -i ~/.ssh/github_deploy_key ubuntu@ec2-54-146-244-40.compute-1.amazonaws.com "sudo bash ~/deploy.sh"
+        shell: bash
 
 # name: Deploy
 
